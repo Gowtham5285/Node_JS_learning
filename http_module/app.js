@@ -1,0 +1,7 @@
+const http=require("http")
+// console.log(http)
+const server=http.createServer((req,res)=>{
+    res.write("Hi!!!!!!")
+    res.end()
+})
+server.listen(8080,()=>console.log("server started on port 8080"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
