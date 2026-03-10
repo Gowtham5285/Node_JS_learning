@@ -47,6 +47,7 @@ exports.login = async (req, res) => {
 exports.users = async (req, res) => {
     try {
         const data=await users.find()
+        res.json({message:"users fetched sucessfully",data:data})
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: error })

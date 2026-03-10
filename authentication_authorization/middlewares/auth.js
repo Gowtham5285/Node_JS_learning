@@ -11,7 +11,8 @@ exports.authentication = async (req, res, next) => {
         }
         const token = authorization.split(" ")[1]
         const decodeToken = jwt.verify(token, process.env.jwt_secret_key)
-        const userData = await users.findById(decodeToken.userInfo_id)
+        console.log(decodeToken.userInfo._id)
+        const userData = await users.findById(decodeToken.userInfo._id)
         if (userData) {
             next()
         }else{
