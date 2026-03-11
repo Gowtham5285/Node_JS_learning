@@ -32,12 +32,11 @@ exports.login = async (req, res) => {
         }
         const passwordCheck = await bcryptjs.compare(password, user.password)
         if (passwordCheck) {
-            const token = await jwt.sign({ userInfo: user }, process.env.jwt_secret_key, { expiresIn: "5m", algorithm: "HS256" })
+            const token = await jwt.sign({ name: user.name, email:user.email }, process.env.jwt_secret_key, { expiresIn: "20m", algorithm: "HS256" })
             return res.status(200).json({ message: "login sucessful", data: user, token: token })
         } else {
             return res.status(400).json({ message: "Invalid Not found" })
         }
-        // passwordCheck === true ? res.status(200).json({ message: "login sucessful", data: user }) : res.status(400).json({ message: "Invalid Not found" })
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: error })
@@ -46,10 +45,29 @@ exports.login = async (req, res) => {
 
 exports.users = async (req, res) => {
     try {
-        const data=await users.find()
-        res.json({message:"users fetched sucessfully",data:data})
+        const data = await users.find()
+        res.json({ message: "users fetched sucessfully", data: data })
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: error })
+    }
+}
+
+exports.profile = async (req, res) => {
+    try {
+        res.json({ message: "Profile opened sucesfully" })
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({ error: error.message })
+    }
+}
+
+
+exports.deleteProfile = async (req, res) => {
+    try {
+        res.json({ message: "Profile deleted sucesfully" })
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({ error: error.message })
     }
 }

@@ -1,11 +1,16 @@
 const express = require("express")
 const router = express.Router()
-const {login,signup,users}=require("../controllers/usersController.js")
-const {authentication}=require("../middlewares/auth.js")
+const { login, signup, users, profile, deleteProfile } = require("../controllers/usersController.js")
+const { authentication,authorization} = require("../middlewares/auth.js")
+
 router.post("/signup", signup)
 
 router.post("/login", login)
+// for admin only
+router.get("/users", authentication, authorization("admin"), users)
 
-router.get("/users",authentication,users)
-
+// for admin and user
+router.get("/profile", authentication, authorization("admin", "user"), profile)
+// for admin
+router.delete("/profile/:id", authentication, authorization("admin"), deleteProfile)
 module.exports = router
