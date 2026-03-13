@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { login, signup, users, profile, deleteProfile } = require("../controllers/usersController.js")
+const { login, signup, users, profile, deleteProfile,createSeller,getSellerProfile} = require("../controllers/usersController.js")
 const { authentication,authorization} = require("../middlewares/auth.js")
 
 router.post("/signup", signup)
@@ -13,4 +13,10 @@ router.get("/users", authentication, authorization("admin"), users)
 router.get("/profile", authentication, authorization("admin", "user"), profile)
 // for admin
 router.delete("/profile/:id", authentication, authorization("admin"), deleteProfile)
+
+// seller signup
+router.post("/sellerSignup",createSeller)
+
+// seller Profile
+router.get("/getSellerProfile",authentication,authorization("seller"),getSellerProfile)
 module.exports = router

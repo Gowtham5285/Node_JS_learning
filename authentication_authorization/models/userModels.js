@@ -20,9 +20,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        enum: ["admin", "user"],
-        default:"user"
-    }
+        enum: ["admin", "user", "seller"],
+        default: "user"
+    },
+    products: [{type:mongoose.Schema.Types.ObjectId,ref:"products"}]
 })
 
 module.exports = mongoose.model("users", userSchema)

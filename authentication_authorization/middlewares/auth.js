@@ -12,7 +12,7 @@ exports.authentication = async (req, res, next) => {
         const token = authorization.split(" ")[1]
         const decodeToken = jwt.verify(token, process.env.jwt_secret_key)
         console.log(decodeToken.email)
-        const userData = await users.findOne({email:decodeToken.userInfo.email})
+        const userData = await users.findOne({email:decodeToken.email})
         if (userData) {
             req.user=userData
             next()
@@ -40,7 +40,6 @@ exports.authorization = (...roles) => {
             //     return res.status(403).json({message:"Unauthorized user/Role"})
             // }
             const userRole=await users.findById(req.user._id,{role:true})
-            console.log(userdata)
             const checkRole=roles.includes(userRole.role)
             if(checkRole){
                 next()
