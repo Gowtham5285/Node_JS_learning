@@ -1,6 +1,7 @@
 const products = require("../models/productsModel.js")
 const jwt=require("jsonwebtoken")
 const users = require("../models/userModels.js")
+const {cloudinary}=require("../config/cloudinary.js")
 
 exports.allProducts = async (req, res) => {
     try {
@@ -15,6 +16,9 @@ exports.allProducts = async (req, res) => {
 exports.addProducts=async(req,res)=>{
     try {
       const {title,price,description}=req.body
+      const files=await req.files.map(async(val)=>{
+        return await cloudinary.uploader.upload(val.path,{ resource_type: "image", folder: "demo_node",public_id:val.fileName})
+      })
       console.log(title,price,description)
       const createProduct=await products.create({title:title,price:price,description:description,sellerId:req.user._id})
       const updateInUser=await users.findByIdAndUpdate(req.user._id,{$push:{products:createProduct._id}})

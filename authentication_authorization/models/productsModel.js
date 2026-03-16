@@ -16,7 +16,8 @@ const productSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"users",
         required:true
-    }
+    },
+    images:{type:Array,required:true}
 },{timestamps:true})
 
 

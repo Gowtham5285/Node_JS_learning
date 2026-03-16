@@ -23,7 +23,19 @@ const userSchema = new mongoose.Schema({
         enum: ["admin", "user", "seller"],
         default: "user"
     },
-    products: [{type:mongoose.Schema.Types.ObjectId,ref:"products"}]
+    products: [{type:mongoose.Schema.Types.ObjectId,ref:"products"}],
+    profile_pic:{
+        filePath:{
+            type:String,
+            trim:true,
+            default:"default"
+        },
+        fileURL:{
+            type:String,
+            trim:true,
+            default:"https://t4.ftcdn.net/jpg/16/99/56/69/360_F_1699566919_akoqx36UfNuuorGejGui5x01xcjb6ACy.jpg"
+        }
+    }
 })
 
 module.exports = mongoose.model("users", userSchema)
